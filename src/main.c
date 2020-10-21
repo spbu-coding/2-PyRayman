@@ -6,7 +6,6 @@
 
 extern void array_sort(int*, int*, int );
 
-
 void all_output(char** params, int params_count, int* numbers, int numbers_size, int* Stdout, int Stdout_size, int* Stderr, int Stderr_size, int exit_code, int* Reduced, int Redused_size, int* Sorted){
     printf("\nParams: ");
     for (int i = 0; i < params_count; i++){
@@ -49,8 +48,6 @@ void print_array(int* array, int size){
         printf("%d ",array[i]);
     }
     printf("\n");
-        
-
 }
 
 void copy_array(int* array, int* copied_array, int size){
@@ -86,7 +83,6 @@ int reducedArraySize(int* arr, int from, int to, int size)
 
 void reduceArray(int* arr, int* newArr, int from, int to, int size)
 {
-    
     int j = 0;
 
     for (int i = 0; i < size; i++)
@@ -121,9 +117,6 @@ void output_arrays( int* numbers, int numbers_size, int from, int to, int* Stdou
 
 int main(int argc, char **argv)
 {   
-
-    
-    
     if(argc <= 1) return -1;
     if(argc > 3) return -2;
     if(argc > 2 && strchr(argv[1], '=') == NULL && strchr(argv[2], '=') == NULL) return -4;
@@ -137,15 +130,9 @@ int main(int argc, char **argv)
     char toCount = 0;
     int from = 0;
     int to = __INT_MAX__;
-
     int reducedSize;
-
-
     int count_Stdout = 0;
     int count_Stderr = 0;
-    
-
-
 
     while(divisor == ' '){
 
@@ -193,44 +180,25 @@ int main(int argc, char **argv)
             toCount = 1;
         }
 
-        
-        
-
-            
-            
-        
     }
     if (fromCount == 0 && toCount == 0)
-    {   
-        
+    {      
         return -4;
     }
 
     output_arrays(numbers,ArraySize,from,to,Stdout,&count_Stdout,Stderr,&count_Stderr);
-    reducedSize = reducedArraySize(numbers, from, to, ArraySize); 
+    reducedSize = reducedArraySize(numbers, from, to, ArraySize);
+     
     int output;
-
     int ReducedArray[reducedSize];
     int SortedArray[reducedSize];
 
     copy_array(ReducedArray, SortedArray, reducedSize);
-
-    
-    
     reduceArray(numbers, ReducedArray, from, to, ArraySize);
     array_sort(ReducedArray, SortedArray, reducedSize);
 
     output = array_compare(ReducedArray, SortedArray, reducedSize);
     all_output(argv,argc,numbers,ArraySize,Stdout,count_Stdout,Stderr,count_Stderr,output,ReducedArray,reducedSize,SortedArray);
 
- //   print_array(ReducedArray,reducedSize);
-   // print_array(SortedArray,reducedSize);
-     
-
-    return output;
-    
-
-
-    
-     
+    return output;  
 }
