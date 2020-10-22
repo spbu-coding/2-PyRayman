@@ -165,7 +165,7 @@ int main(int argc, char **argv)
             if (toCount == 1)
             {
                 
-                printf("-3");
+                return -3;
             }
             if (strlen(argv[i]) > 5)
             {
