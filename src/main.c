@@ -201,7 +201,7 @@ int main(int argc, char **argv)
 
 
     output = array_compare(ReducedArray, SortedArray, reducedSize);
-    all_output(argv,argc,numbers,ArraySize,Stdout,count_Stdout,Stderr,count_Stderr,output,ReducedArray,reducedSize,SortedArray);
+    //all_output(argv,argc,numbers,ArraySize,Stdout,count_Stdout,Stderr,count_Stderr,output,ReducedArray,reducedSize,SortedArray);
 
     return output;  
 }
