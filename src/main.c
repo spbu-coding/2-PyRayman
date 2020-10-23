@@ -2,6 +2,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include <limits.h>
 # define sort_array _sort_array
 
 extern void array_sort(int*, int*, int );
@@ -102,11 +103,11 @@ void output_arrays( int* numbers, int numbers_size, int from, int to, int* Stdou
     int count_Stderr = 0;
 
     for (int i = 0; i < numbers_size; i++) {
-        if (numbers[i] <= from && from != 0) {
+        if (numbers[i] <= from ) {
             Stdout[count_Stdout] = numbers[i];
             count_Stdout++;
         }
-        if (numbers[i] >= to && to != 0) {
+        if (numbers[i] >= to ) {
             Stderr[count_Stderr] = numbers[i];
             count_Stderr++;
         }
@@ -128,8 +129,8 @@ int main(int argc, char **argv)
 
     char fromCount = 0;
     char toCount = 0;
-    int from = 0;
-    int to = __INT_MAX__;
+    int from = INT_MIN;
+    int to = INT_MAX;
     int reducedSize;
     int count_Stdout = 0;
     int count_Stderr = 0;
@@ -155,7 +156,7 @@ int main(int argc, char **argv)
             }
             else
             {
-                from = 0;
+                from = INT_MIN;
             }
 
             fromCount = 1;
@@ -174,7 +175,7 @@ int main(int argc, char **argv)
 
             else
             {
-                to = 0;
+                to = INT_MAX;
             }
             
             toCount = 1;
@@ -196,6 +197,8 @@ int main(int argc, char **argv)
     copy_array(ReducedArray, SortedArray, reducedSize);
     reduceArray(numbers, ReducedArray, from, to, ArraySize);
     array_sort(ReducedArray, SortedArray, reducedSize);
+
+
 
     output = array_compare(ReducedArray, SortedArray, reducedSize);
     all_output(argv,argc,numbers,ArraySize,Stdout,count_Stdout,Stderr,count_Stderr,output,ReducedArray,reducedSize,SortedArray);
