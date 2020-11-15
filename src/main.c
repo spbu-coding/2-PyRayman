@@ -6,8 +6,9 @@
 # define sort_array _sort_array
 
 extern void array_sort(int* , int* , int );
-/*
+
 void all_output(char** params, int params_count, int* numbers, int numbers_size, int* Stdout, int Stdout_size, int* Stderr, int Stderr_size, int exit_code, int* Reduced, int Redused_size, int* Sorted){
+  /*  
     fprintf(stdout,"\nParams: ");
     for (int i = 0; i < params_count; i++){
         fprintf(stdout,"%s ",params[i]);
@@ -17,17 +18,17 @@ void all_output(char** params, int params_count, int* numbers, int numbers_size,
     for (int i = 0; i < numbers_size; i++){
         fprintf(stdout,"%d ",numbers[i]);
     }
-
-    fprintf(stdout ,"\nStdout: ");
+*/
+    printf("\nStdout: ");
     for (int i = 0; i < Stdout_size; i++){
         fprintf(stdout ,"%d ",Stdout[i]);
     }
 
-    fprintf(stdout, "\nStderr: ");
+    printf( "\nStderr: ");
     for (int i = 0; i < Stderr_size; i++){
-        fprintf(stdout,"%d ",Stderr[i]);
+        fprintf(stderr,"%d ",Stderr[i]);
     }
-
+/*
     fprintf(stdout ,"\nExit Code: %d ",exit_code);
 
     fprintf(stdout, "\n(Reduced: ");
@@ -39,10 +40,10 @@ void all_output(char** params, int params_count, int* numbers, int numbers_size,
         fprintf(stdout ,"%d ",Sorted[i]);
     }
     fprintf(stdout, ")\n");
-
+*/
 
 }
-*/
+
 void copy_array(int *source, int *target, int count_of_elements){
     for(int i = 0; i < count_of_elements; i++){
         target[i] = source[i];
@@ -98,7 +99,7 @@ void output_arrays( int* numbers, int numbers_size, int from, int to, int* Stdou
             Stdout[count_Stdout] = numbers[i];
             count_Stdout++;
         }
-        if (numbers[i] >= to ) {
+        if (numbers[i] > to ) {
             Stderr[count_Stderr] = numbers[i];
             count_Stderr++;
         }
@@ -207,7 +208,7 @@ int main(int argc, char **argv)
 
 
     output = array_compare(ReducedArray, SortedArray, reducedSize);
-   // all_output(argv,argc,numbers,ArraySize,Stdout,count_Stdout,Stderr,count_Stderr,output,ReducedArray,reducedSize,SortedArray);
+    all_output(argv,argc,numbers,ArraySize,Stdout,count_Stdout,Stderr,count_Stderr,output,ReducedArray,reducedSize,SortedArray);
 
     return output;  
 }
