@@ -172,15 +172,15 @@ int main(int argc, char **argv)
         return result_of_check;
     }
 
-    output_arrays(numbers,ArraySize,from,to,Stdout,&count_Stdout,Stderr,&count_Stderr);
-    reducedSize = reducedArraySize(numbers, from, to, ArraySize);
+    output_arrays(numbers,ArraySize, &from, &to,Stdout,&count_Stdout,Stderr,&count_Stderr);
+    reducedSize = reducedArraySize(numbers, &from, &to, ArraySize);
      
     int output;
     int ReducedArray[reducedSize];
     int SortedArray[reducedSize];
 
     copy_array(SortedArray,ReducedArray, reducedSize );
-    reduceArray(numbers, ReducedArray, from, to, ArraySize);
+    reduceArray(numbers, ReducedArray, &from,  &to, ArraySize);
     array_sort(ReducedArray, SortedArray, reducedSize);
 
 
