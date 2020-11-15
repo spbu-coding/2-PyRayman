@@ -5,57 +5,48 @@
 #include <limits.h>
 # define sort_array _sort_array
 
-extern void array_sort(int*, int*, int );
+extern void array_sort(int* , int* , int );
 
 void all_output(char** params, int params_count, int* numbers, int numbers_size, int* Stdout, int Stdout_size, int* Stderr, int Stderr_size, int exit_code, int* Reduced, int Redused_size, int* Sorted){
-    printf("\nParams: ");
+    fprintf(stdout,"\nParams: ");
     for (int i = 0; i < params_count; i++){
-        printf("%s ",params[i]);
+        fprintf(stdout,"%s ",params[i]);
     }
 
-    printf("\nInput: ");
+    fprintf(stdout,"\nInput: ");
     for (int i = 0; i < numbers_size; i++){
-        printf("%d ",numbers[i]);
+        fprintf(stdout,"%d ",numbers[i]);
     }
 
-    printf("\nStdout: ");
+    fprintf(stdout ,"\nStdout: ");
     for (int i = 0; i < Stdout_size; i++){
-        printf("%d ",Stdout[i]);
+        fprintf(stdout ,"%d ",Stdout[i]);
     }
 
-    printf("\nStderr: ");
+    fprintf(stdout, "\nStderr: ");
     for (int i = 0; i < Stderr_size; i++){
-        printf("%d ",Stderr[i]);
+        fprintf(stdout,"%d ",Stderr[i]);
     }
 
-    printf("\nExit Code: %d ",exit_code);
+    fprintf(stdout ,"\nExit Code: %d ",exit_code);
 
-    printf("\n(Reduced: ");
+    fprintf(stdout, "\n(Reduced: ");
     for (int i = 0; i < Redused_size; i++){
-        printf("%d ",Reduced[i]);
+        fprintf(stdout ,"%d ",Reduced[i]);
     }
-    printf(", Sorted: ");
+    fprintf(stdout,", Sorted: ");
     for (int i = 0; i < Redused_size; i++){
-        printf("%d ",Sorted[i]);
+        fprintf(stdout ,"%d ",Sorted[i]);
     }
-    printf(")\n");
+    fprintf(stdout, ")\n");
 
 
 }
 
-void print_array(int* array, int size){
-    
-    for (int i = 0; i < size; i++){
-        printf("%d ",array[i]);
+void copy_array(int *source, int *target, int count_of_elements){
+    for(int i = 0; i < count_of_elements; i++){
+        target[i] = source[i];
     }
-    printf("\n");
-}
-
-void copy_array(int* array, int* copied_array, int size){
-    for (int i = 0; i < size; i++){
-        copied_array[i] = array[i];
-    }
-
 }
 
 int array_compare(int* reducedArray,  int* sortedArray, int size){
@@ -116,32 +107,13 @@ void output_arrays( int* numbers, int numbers_size, int from, int to, int* Stdou
     *stderr_size = count_Stderr;
 }
 
-int main(int argc, char **argv)
-{   
-    if(argc <= 1) return -1;
-    if(argc > 3) return -2;
-    if(argc > 2 && strchr(argv[1], '=') == NULL && strchr(argv[2], '=') == NULL) return -4;
-
-    int *numbers = malloc(sizeof(long long)*100);
-    int Stdout[100],Stderr[100];
-    char divisor = ' '; 
-    int ArraySize = 0;
+int check_params(int argc, char* argv[], long long* restrict to, long long* restrict from){
 
     char fromCount = 0;
     char toCount = 0;
-    int from = INT_MIN;
-    int to = INT_MAX;
-    int reducedSize;
-    int count_Stdout = 0;
-    int count_Stderr = 0;
 
-    while(divisor == ' '){
 
-        scanf("%d%c", &numbers[ArraySize], &divisor);
-        ArraySize++;
-    }
-
-    for (int i = 1; i < argc; i++)
+        for (int i = 1; i < argc; i++)
     {
         if (strncmp(argv[i], "--from=", 7) == 0)
         {
@@ -152,11 +124,11 @@ int main(int argc, char **argv)
             }
             if (strlen(argv[i]) > 7)
             {
-                from = atoi(argv[i] + 7);
+                *from = strtoll(argv[i] + 7, NULL, 10);
             }
             else
             {
-                from = INT_MIN;
+                *from = INT_MIN;
             }
 
             fromCount = 1;
@@ -170,12 +142,12 @@ int main(int argc, char **argv)
             }
             if (strlen(argv[i]) > 5)
             {
-                to = atoi(argv[i] + 5);
+                *to = strtoll(argv[i] + 5, NULL, 10);
             }
 
             else
             {
-                to = INT_MAX;
+                *to = INT_MAX;
             }
             
             toCount = 1;
@@ -186,6 +158,40 @@ int main(int argc, char **argv)
     {      
         return -4;
     }
+    return 0;
+}
+
+
+
+int main(int argc, char **argv)
+{   
+    if(argc <= 1) return -1;
+    if(argc > 3) return -2;
+    if(argc > 2 && strchr(argv[1], '=') == NULL && strchr(argv[2], '=') == NULL) return -4;
+
+
+    int *numbers = malloc(sizeof(long long)*100);
+    int Stdout[100],Stderr[100];
+    char divisor = ' '; 
+    int ArraySize = 0;
+
+
+    long long int from = 0, to = 0;
+    
+    int reducedSize;
+    int count_Stdout = 0;
+    int count_Stderr = 0;
+
+    while(divisor == ' '){
+
+        scanf("%d%c", &numbers[ArraySize], &divisor);
+        ArraySize++;
+    }
+
+    int result_of_check = check_params(argc, argv, &to, &from);
+    if (result_of_check != 0){
+        return result_of_check;
+    }
 
     output_arrays(numbers,ArraySize,from,to,Stdout,&count_Stdout,Stderr,&count_Stderr);
     reducedSize = reducedArraySize(numbers, from, to, ArraySize);
@@ -194,14 +200,14 @@ int main(int argc, char **argv)
     int ReducedArray[reducedSize];
     int SortedArray[reducedSize];
 
-    copy_array(ReducedArray, SortedArray, reducedSize);
+    copy_array(SortedArray,ReducedArray, reducedSize );
     reduceArray(numbers, ReducedArray, from, to, ArraySize);
     array_sort(ReducedArray, SortedArray, reducedSize);
 
 
 
     output = array_compare(ReducedArray, SortedArray, reducedSize);
-    //all_output(argv,argc,numbers,ArraySize,Stdout,count_Stdout,Stderr,count_Stderr,output,ReducedArray,reducedSize,SortedArray);
+    all_output(argv,argc,numbers,ArraySize,Stdout,count_Stdout,Stderr,count_Stderr,output,ReducedArray,reducedSize,SortedArray);
 
     return output;  
 }
