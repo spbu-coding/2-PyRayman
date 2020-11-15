@@ -38,7 +38,7 @@ int array_compare(int* reducedArray,  int* sortedArray, int size){
     return counter;
 }
 
-int reducedArraySize(int* arr, int from, int to, int size)
+int reducedArraySize(int* arr, long long* restrict from, long long* restrict to, int size)
 {
     int newSize = 0;
     int i;
@@ -52,7 +52,7 @@ int reducedArraySize(int* arr, int from, int to, int size)
     return newSize;
 }
 
-void reduceArray(int* arr, int* newArr, int from, int to, int size)
+void reduceArray(int* arr, int* newArr, long long* restrict from, long long* restrict to, int size)
 {
     int j = 0;
 
