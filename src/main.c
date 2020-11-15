@@ -38,13 +38,13 @@ int array_compare(int* reducedArray,  int* sortedArray, int size){
     return counter;
 }
 
-int reducedArraySize(int* arr, long long* restrict from, long long* restrict to, int size)
+int reducedArraySize(long long* restrict arr, long long* restrict from, long long* restrict to, int size)
 {
     int newSize = 0;
     int i;
     for (i = 0; i < size; i++)
     {
-        if (arr[i] > from && arr[i] < to)
+        if (arr[i] > *from && arr[i] < *to)
         {
             newSize++;
         }
@@ -52,13 +52,13 @@ int reducedArraySize(int* arr, long long* restrict from, long long* restrict to,
     return newSize;
 }
 
-void reduceArray(int* arr, int* newArr, long long* restrict from, long long* restrict to, int size)
+void reduceArray(long long* restrict arr, int* newArr, long long* restrict from, long long* restrict to, int size)
 {
     int j = 0;
 
     for (int i = 0; i < size; i++)
     {
-        if (arr[i] > from && arr[i] < to)
+        if (arr[i] > *from && arr[i] < *to)
         {
             newArr[j] = arr[i];
             j++;
@@ -67,17 +67,17 @@ void reduceArray(int* arr, int* newArr, long long* restrict from, long long* res
     
 }
 
-void output_arrays( int* numbers, int numbers_size, long long* restrict from, long long* restrict to, long long* restrict Stdout, int *stdout_size, long long* restrict Stderr, int *stderr_size)
+void output_arrays( long long* restrict numbers, int numbers_size, long long* restrict from, long long* restrict to, long long* restrict Stdout, int *stdout_size, long long* restrict Stderr, int *stderr_size)
 {
     int count_Stdout = 0;
     int count_Stderr = 0;
 
     for (int i = 0; i < numbers_size; i++) {
-        if (numbers[i] <= from ) {
+        if (numbers[i] <= *from ) {
             Stdout[count_Stdout] = numbers[i];
             count_Stdout++;
         }
-        if (numbers[i] > to ) {
+        if (numbers[i] > *to ) {
             Stderr[count_Stderr] = numbers[i];
             count_Stderr++;
         }
@@ -149,7 +149,7 @@ int main(int argc, char **argv)
     if(argc > 2 && strchr(argv[1], '=') == NULL && strchr(argv[2], '=') == NULL) return -4;
 
 
-    int *numbers = malloc(sizeof(long long)*100);
+    long long int numbers[100];
     long long int Stdout[100],Stderr[100];
     char divisor = ' '; 
     int ArraySize = 0;
@@ -163,7 +163,7 @@ int main(int argc, char **argv)
 
     while(divisor == ' '){
 
-        scanf("%d%c", &numbers[ArraySize], &divisor);
+        scanf("%lli%c", &numbers[ArraySize], &divisor);
         ArraySize++;
     }
 
