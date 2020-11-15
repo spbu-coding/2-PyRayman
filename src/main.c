@@ -7,7 +7,7 @@
 
 extern void array_sort(int* , int* , int );
 
-void all_output(int* Stdout, int Stdout_size, int* Stderr, int Stderr_size){
+void all_output(long long* restrict Stdout, int Stdout_size, long long* restrict Stderr, int Stderr_size){
 
  
     for (int i = 0; i < Stdout_size; i++){
