@@ -9,12 +9,12 @@ extern void array_sort(int* , int* , int );
 
 void all_output(int* Stdout, int Stdout_size, int* Stderr, int Stderr_size){
 
-    printf("\nStdout: ");
+ 
     for (int i = 0; i < Stdout_size; i++){
         fprintf(stdout ,"%d ",Stdout[i]);
     }
 
-    printf( "\nStderr: ");
+ 
     for (int i = 0; i < Stderr_size; i++){
         fprintf(stderr,"%d ",Stderr[i]);
     }
