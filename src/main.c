@@ -11,12 +11,12 @@ void all_output(int* Stdout, int Stdout_size, int* Stderr, int Stderr_size){
 
  
     for (int i = 0; i < Stdout_size; i++){
-        fprintf(stdout ,"%d ",Stdout[i]);
+        fprintf(stdout ,"%lli ",Stdout[i]);
     }
 
  
     for (int i = 0; i < Stderr_size; i++){
-        fprintf(stderr,"%d ",Stderr[i]);
+        fprintf(stderr,"%lli ",Stderr[i]);
     }
 
 
@@ -67,7 +67,7 @@ void reduceArray(int* arr, int* newArr, int from, int to, int size)
     
 }
 
-void output_arrays( int* numbers, int numbers_size, int from, int to, int* Stdout, int *stdout_size, int* Stderr, int *stderr_size)
+void output_arrays( int* numbers, int numbers_size, long long* restrict from, long long* restrict to, long long* restrict Stdout, int *stdout_size, long long* restrict Stderr, int *stderr_size)
 {
     int count_Stdout = 0;
     int count_Stderr = 0;
@@ -150,7 +150,7 @@ int main(int argc, char **argv)
 
 
     int *numbers = malloc(sizeof(long long)*100);
-    int Stdout[100],Stderr[100];
+    long long int Stdout[100],Stderr[100];
     char divisor = ' '; 
     int ArraySize = 0;
 
