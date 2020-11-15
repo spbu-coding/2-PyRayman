@@ -7,18 +7,8 @@
 
 extern void array_sort(int* , int* , int );
 
-void all_output(char** params, int params_count, int* numbers, int numbers_size, int* Stdout, int Stdout_size, int* Stderr, int Stderr_size, int exit_code, int* Reduced, int Redused_size, int* Sorted){
-  /*  
-    fprintf(stdout,"\nParams: ");
-    for (int i = 0; i < params_count; i++){
-        fprintf(stdout,"%s ",params[i]);
-    }
+void all_output(int* Stdout, int Stdout_size, int* Stderr, int Stderr_size){
 
-    fprintf(stdout,"\nInput: ");
-    for (int i = 0; i < numbers_size; i++){
-        fprintf(stdout,"%d ",numbers[i]);
-    }
-*/
     printf("\nStdout: ");
     for (int i = 0; i < Stdout_size; i++){
         fprintf(stdout ,"%d ",Stdout[i]);
@@ -28,19 +18,7 @@ void all_output(char** params, int params_count, int* numbers, int numbers_size,
     for (int i = 0; i < Stderr_size; i++){
         fprintf(stderr,"%d ",Stderr[i]);
     }
-/*
-    fprintf(stdout ,"\nExit Code: %d ",exit_code);
 
-    fprintf(stdout, "\n(Reduced: ");
-    for (int i = 0; i < Redused_size; i++){
-        fprintf(stdout ,"%d ",Reduced[i]);
-    }
-    fprintf(stdout,", Sorted: ");
-    for (int i = 0; i < Redused_size; i++){
-        fprintf(stdout ,"%d ",Sorted[i]);
-    }
-    fprintf(stdout, ")\n");
-*/
 
 }
 
@@ -208,7 +186,7 @@ int main(int argc, char **argv)
 
 
     output = array_compare(ReducedArray, SortedArray, reducedSize);
-    all_output(argv,argc,numbers,ArraySize,Stdout,count_Stdout,Stderr,count_Stderr,output,ReducedArray,reducedSize,SortedArray);
+    all_output(Stdout,count_Stdout,Stderr,count_Stderr);
 
     return output;  
 }
