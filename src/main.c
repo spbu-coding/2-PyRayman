@@ -77,7 +77,7 @@ void output_arrays( long long* restrict numbers, int numbers_size, long long* re
             Stdout[count_Stdout] = numbers[i];
             count_Stdout++;
         }
-        if (numbers[i] > *to ) {
+        if (numbers[i] >= *to ) {
             Stderr[count_Stderr] = numbers[i];
             count_Stderr++;
         }
