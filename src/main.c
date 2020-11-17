@@ -6,7 +6,7 @@
 # define sort_array _sort_array
 
 extern void array_sort(int* , int* , int );
-
+/*
 void all_output(long long* restrict Stdout, int Stdout_size, long long* restrict Stderr, int Stderr_size){
 
  
@@ -85,7 +85,7 @@ void output_arrays( long long* restrict numbers, int numbers_size, long long* re
     *stdout_size = count_Stdout;
     *stderr_size = count_Stderr;
 }
-
+*/
 int check_params(int argc, char* argv[], long long* restrict to, long long* restrict from, int* toCount, int* fromCount){
 
 
