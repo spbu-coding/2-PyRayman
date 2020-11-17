@@ -184,14 +184,14 @@ int main(int argc, char **argv)
     long long int numbers[100];
     long long int copy_numb[100];
 //    long long int Stdout[100],Stderr[100];
-    char divisor = ' '; 
-    int ArraySize = 0;
+//    char divisor = ' '; 
+//    int ArraySize = 0;
     int to_count = 0, from_count = 0;
 
 
     long long int from = 0, to = 0;
     
-    int reducedSize;
+ //   int reducedSize;
    // int count_Stdout = 0;
    // int count_Stderr = 0;
 /*
@@ -200,7 +200,7 @@ int main(int argc, char **argv)
         scanf("%lli%c", &numbers[ArraySize], &divisor);
         ArraySize++;
     }
-*/
+*/  
     int result_of_check = check_params(argc, argv, &to, &from, &from_count, &to_count);
     if (result_of_check != 0){
         return result_of_check;
