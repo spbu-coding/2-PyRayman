@@ -104,10 +104,7 @@ int check_params(int argc, char* argv[], long long* restrict to, long long* rest
             {
                 *from = strtoll(argv[i] + 7, NULL, 10);
             }
-            else
-            {
-                *from = INT_MIN;
-            }
+           
 
             *fromCount = 1;
         }
@@ -123,10 +120,7 @@ int check_params(int argc, char* argv[], long long* restrict to, long long* rest
                 *to = strtoll(argv[i] + 5, NULL, 10);
             }
 
-            else
-            {
-                *to = INT_MAX;
-            }
+            
             
             *toCount = 1;
         }
