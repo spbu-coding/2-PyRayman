@@ -88,10 +88,16 @@ void output_arrays( long long* restrict numbers, int numbers_size, long long* re
 */
 int check_params(int argc, char* argv[], long long* restrict to, long long* restrict from, int* toCount, int* fromCount){
 
+    if(argc <= 1) return -1;
+    if(argc > 3) return -2;
 
+    if(argc > 2 && ( ((strncmp(argv[1] , "--from=" , 7) ==0 )  && (strncmp(argv[2] , "--from=" , 7) ==0))
+        || ((strncmp(argv[1] , "--to=" , 5) ==0 )  && (strncmp(argv[2] , "--to=" , 5) ==0) ) ) )
+    {
+        return -3;
+    }
 
-
-        for (int i = 1; i < argc; i++)
+    for (int i = 1; i < argc; ++i)
     {
         if (strncmp(argv[i], "--from=", 7) == 0)
         {
@@ -100,14 +106,11 @@ int check_params(int argc, char* argv[], long long* restrict to, long long* rest
                 
                 return -3;
             }
-            if (strlen(argv[i]) > 7)
-            {
-                *from = strtoll(argv[i] + 7, NULL, 10);
-            }
-           
-
+            
+            *from = strtoll(argv[i] + 7, NULL, 10);
             *fromCount = 1;
         }
+
         else if (strncmp(argv[i], "--to=", 5) == 0)
         {
             if (*toCount == 1)
@@ -115,12 +118,9 @@ int check_params(int argc, char* argv[], long long* restrict to, long long* rest
                 
                 return -3;
             }
-            if (strlen(argv[i]) > 5)
-            {
-                *to = strtoll(argv[i] + 5, NULL, 10);
-            }
-
             
+            
+            *to = strtoll(argv[i] + 5, NULL, 10);     
             
             *toCount = 1;
         }
@@ -130,6 +130,7 @@ int check_params(int argc, char* argv[], long long* restrict to, long long* rest
     {      
         return -4;
     }
+
     return 0;
 }
 
@@ -170,9 +171,9 @@ int enter_array(long long* restrict from, long long* restrict to,long long* rest
 
 int main(int argc, char **argv)
 {   
-    if(argc <= 1) return -1;
-    if(argc > 3) return -2;
-    if(argc > 2 && strchr(argv[1], '=') == NULL && strchr(argv[2], '=') == NULL) return -4;
+//    if(argc <= 1) return -1;
+//    if(argc > 3) return -2;
+//    if(argc > 2 && strchr(argv[1], '=') == NULL && strchr(argv[2], '=') == NULL) return -4;
 
 
     long long int numbers[100];
