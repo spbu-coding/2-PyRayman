@@ -86,17 +86,16 @@ void output_arrays( long long* restrict numbers, int numbers_size, long long* re
     *stderr_size = count_Stderr;
 }
 
-int check_params(int argc, char* argv[], long long* restrict to, long long* restrict from){
+int check_params(int argc, char* argv[], long long* restrict to, long long* restrict from, int* toCount, int* fromCount){
 
-    char fromCount = 0;
-    char toCount = 0;
+
 
 
         for (int i = 1; i < argc; i++)
     {
         if (strncmp(argv[i], "--from=", 7) == 0)
         {
-            if (fromCount == 1)
+            if (*fromCount == 1)
             {
                 
                 return -3;
@@ -110,11 +109,11 @@ int check_params(int argc, char* argv[], long long* restrict to, long long* rest
                 *from = INT_MIN;
             }
 
-            fromCount = 1;
+            *fromCount = 1;
         }
         else if (strncmp(argv[i], "--to=", 5) == 0)
         {
-            if (toCount == 1)
+            if (*toCount == 1)
             {
                 
                 return -3;
@@ -129,18 +128,51 @@ int check_params(int argc, char* argv[], long long* restrict to, long long* rest
                 *to = INT_MAX;
             }
             
-            toCount = 1;
+            *toCount = 1;
         }
 
     }
-    if (fromCount == 0 && toCount == 0)
+    if (*fromCount == 0 && *toCount == 0)
     {      
         return -4;
     }
     return 0;
 }
 
+int enter_array(long long* restrict from, long long* restrict to,long long* restrict array,
+                long long* restrict array2, int size, int from_count, int to_count)
+{
+    int elements_in_array = 0;                                                          
+    long long number;                                                                   
+    char check_for_the_last_element;                                                    
 
+    do {
+
+        if(scanf("%lli%c" , &number , &check_for_the_last_element ) !=2 )               
+        {
+            fprintf(stderr , "can't read [%d] element" , elements_in_array);
+            return -1;
+        }
+        if(number <= *from && from_count != 0 )
+        {
+            fprintf(stdout, "%lli " , number);
+        }
+        if(number >= *to && to_count != 0)
+        {
+            fprintf(stderr , "%lli " , number);
+        }
+        if(((number > *from) || (from_count == 0 ))
+        && ((number < *to) || to_count == 0))                                     
+        {
+            array[elements_in_array] = number;
+            array2[elements_in_array] = number;
+            elements_in_array+=1;
+        }
+
+    } while (check_for_the_last_element != '\n' && elements_in_array < size);  
+
+    return elements_in_array;   
+}
 
 int main(int argc, char **argv)
 {   
@@ -150,43 +182,59 @@ int main(int argc, char **argv)
 
 
     long long int numbers[100];
-    long long int Stdout[100],Stderr[100];
+    long long int copy_numb[100];
+//    long long int Stdout[100],Stderr[100];
     char divisor = ' '; 
     int ArraySize = 0;
+    int to_count = 0, from_count = 0;
 
 
     long long int from = 0, to = 0;
     
     int reducedSize;
-    int count_Stdout = 0;
-    int count_Stderr = 0;
-
+   // int count_Stdout = 0;
+   // int count_Stderr = 0;
+/*
     while(divisor == ' '){
 
         scanf("%lli%c", &numbers[ArraySize], &divisor);
         ArraySize++;
     }
-
-    int result_of_check = check_params(argc, argv, &to, &from);
+*/
+    int result_of_check = check_params(argc, argv, &to, &from, &from_count, &to_count);
     if (result_of_check != 0){
         return result_of_check;
     }
 
-    output_arrays(numbers,ArraySize, &from, &to,Stdout,&count_Stdout,Stderr,&count_Stderr);
-    reducedSize = reducedArraySize(numbers, &from, &to, ArraySize);
+    int elements_in_array = enter_array(&from, &to, numbers, copy_numb, 100, from_count, to_count);
+    if (elements_in_array < 0){
+        return -5;
+    }
+
+    //output_arrays(numbers,ArraySize, &from, &to,Stdout,&count_Stdout,Stderr,&count_Stderr);
+ //   reducedSize = reducedArraySize(numbers, &from, &to, ArraySize);
      
     int output;
+/*
     int ReducedArray[reducedSize];
     int SortedArray[reducedSize];
 
     copy_array(SortedArray,ReducedArray, reducedSize );
     reduceArray(numbers, ReducedArray, &from,  &to, ArraySize);
     array_sort(ReducedArray, SortedArray, reducedSize);
+*/
 
 
+    //output = array_compare(ReducedArray, SortedArray, reducedSize);
+    //all_output(Stdout,count_Stdout,Stderr,count_Stderr);
 
-    output = array_compare(ReducedArray, SortedArray, reducedSize);
-    all_output(Stdout,count_Stdout,Stderr,count_Stderr);
+    for(int i = 0 ; i < elements_in_array ; ++i)
+    {
+        if(numbers[i] != copy_numb[i])
+        {
+            output+=1;
+        }
+    }
 
     return output;  
 }
