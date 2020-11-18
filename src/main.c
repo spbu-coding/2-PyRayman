@@ -108,13 +108,13 @@ int check_params(int argc, char* argv[], long long* restrict to, long long* rest
         {
             *(from) = strtoll(params[i] +7 , NULL, 10 );  // Вбиваем число в переменную
 
-            existOfParams -> from = 1;
+            ExistOfParams -> from = 1;
         }
         else if( (*(to) == 0)  && (strncmp( params[i]  , "--to=" , 5) == 0))    // Если нашли параметр, где начало строки совпадает с "--to=" то надо вычислить то, что нам надо из этого параметра
         {
             *(to) = strtoll(params[i] +5 , NULL, 10 );          // Вбиваем число в переменную
 
-            existOfParams -> to = 1;
+            ExistOfParams -> to = 1;
         }
     }
     if (ExistOfParams -> from == 0 && ExistOfParams -> to == 0)
