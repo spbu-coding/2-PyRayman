@@ -139,16 +139,16 @@ int enter_array(long long* restrict from, long long* restrict to,long long* rest
             fprintf(stderr , "can't read [%d] element" , elements_in_array);
             return -1;
         }
-        if(number <= *from && existOfParams ->from != 0 )
+        if(number <= *from && ExistOfParams ->from != 0 )
         {
             fprintf(stdout, "%lli " , number);
         }
-        if(number >= *to && existOfParams->to != 0)
+        if(number >= *to && ExistOfParams->to != 0)
         {
             fprintf(stderr , "%lli " , number);
         }
-        if(((number > *from) || (existOfParams -> from == 0 ))
-        && ((number < *to) || existOfParams -> to == 0))                                     
+        if(((number > *from) || (ExistOfParams -> from == 0 ))
+        && ((number < *to) || ExistOfParams -> to == 0))                                     
         {
             array[elements_in_array] = number;
             array2[elements_in_array] = number;
