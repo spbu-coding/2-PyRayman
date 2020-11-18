@@ -6,6 +6,12 @@
 # define sort_array _sort_array
 
 extern void array_sort(int* , int* , int );
+
+struct params_exist
+{
+    int from;
+    int to;
+};
 /*
 void all_output(long long* restrict Stdout, int Stdout_size, long long* restrict Stderr, int Stderr_size){
 
@@ -86,7 +92,7 @@ void output_arrays( long long* restrict numbers, int numbers_size, long long* re
     *stderr_size = count_Stderr;
 }
 */
-int check_params(int argc, char* argv[], long long* restrict to, long long* restrict from, int* toCount, int* fromCount){
+int check_params(int argc, char* argv[], long long* restrict to, long long* restrict from, struct params_exist *ExistOfParams){
 
     if(argc <= 1) return -1;
     if(argc > 3) return -2;
@@ -99,34 +105,20 @@ int check_params(int argc, char* argv[], long long* restrict to, long long* rest
 
     for (int i = 1; i < argc; ++i)
     {
-        if (strncmp(argv[i], "--from=", 7) == 0)
+        if( (*(from) == 0) && (strncmp(params[i]  , "--from=" , 7) == 0))     // Если нашли параметр, где начало строки совпадает с "--from=" то надо вычислить то, что нам надо из этого параметра
         {
-            if (*fromCount == 1)
-            {
-                
-                return -3;
-            }
-            
-            *from = strtoll(argv[i] + 7, NULL, 10);
-            *fromCount = 1;
-        }
+            *(from) = strtoll(params[i] +7 , NULL, 10 );  // Вбиваем число в переменную
 
-        else if (strncmp(argv[i], "--to=", 5) == 0)
+            existOfParams -> from = 1;
+        }
+        else if( (*(to) == 0)  && (strncmp( params[i]  , "--to=" , 5) == 0))    // Если нашли параметр, где начало строки совпадает с "--to=" то надо вычислить то, что нам надо из этого параметра
         {
-            if (*toCount == 1)
-            {
-                
-                return -3;
-            }
-            
-            
-            *to = strtoll(argv[i] + 5, NULL, 10);     
-            
-            *toCount = 1;
-        }
+            *(to) = strtoll(params[i] +5 , NULL, 10 );          // Вбиваем число в переменную
 
+            existOfParams -> to = 1;
+        }
     }
-    if (*fromCount == 0 && *toCount == 0)
+    if (ExistOfParams -> from == 0 && ExistOfParams -> to == 0)
     {      
         return -4;
     }
@@ -135,39 +127,39 @@ int check_params(int argc, char* argv[], long long* restrict to, long long* rest
 }
 
 int enter_array(long long* restrict from, long long* restrict to,long long* restrict array,
-                long long* restrict array2, int size, int from_count, int to_count)
+                long long* restrict array2, int size, struct params_exist *ExistOfParams)
 {
-    int elements_in_array = 0;                                                          
-    long long number;                                                                   
+    int elements_in_array = 0;                                                         
+    long long number;                                                                  
     char check_for_the_last_element;                                                    
 
     do {
 
-        if(scanf("%lli%c" , &number , &check_for_the_last_element ) !=2 )               
+        if(scanf("%lli%c" , &number , &check_for_the_last_element ) !=2 )              
         {
             fprintf(stderr , "can't read [%d] element" , elements_in_array);
             return -1;
         }
-        if(number <= *from && from_count != 0 )
+        if(number <= *from && existOfParams ->from != 0 )
         {
             fprintf(stdout, "%lli " , number);
         }
-        if(number >= *to && to_count != 0)
+        if(number >= *to && existOfParams->to != 0)
         {
             fprintf(stderr , "%lli " , number);
         }
-        if(((number > *from) || (from_count == 0 ))
-        && ((number < *to) || to_count == 0))                                     
+        if(((number > *from) || (existOfParams -> from == 0 ))
+        && ((number < *to) || existOfParams -> to == 0))                                     
         {
             array[elements_in_array] = number;
             array2[elements_in_array] = number;
             elements_in_array+=1;
         }
 
-    } while (check_for_the_last_element != '\n' && elements_in_array < size);  
-
-    return elements_in_array;   
+    } while (check_for_the_last_element != '\n' && elements_in_array < size); 
+    return elements_in_array;
 }
+
 
 int main(int argc, char **argv)
 {   
@@ -181,10 +173,12 @@ int main(int argc, char **argv)
 //    long long int Stdout[100],Stderr[100];
 //    char divisor = ' '; 
 //    int ArraySize = 0;
-    int to_count = 0, from_count = 0;
-
-
     long long int from = 0, to = 0;
+    struct params_exist ExistOfParams = {0,0};
+    {
+        /* data */
+    };
+    
     
  //   int reducedSize;
    // int count_Stdout = 0;
@@ -196,12 +190,12 @@ int main(int argc, char **argv)
         ArraySize++;
     }
 */  
-    int result_of_check = check_params(argc, argv, &to, &from, &from_count, &to_count);
+    int result_of_check = check_params(argc, argv, &to, &from, &ExistOfParams);
     if (result_of_check != 0){
         return result_of_check;
     }
 
-    int elements_in_array = enter_array(&from, &to, numbers, copy_numb, 100, from_count, to_count);
+    int elements_in_array = enter_array(&from, &to, numbers, copy_numb, 100, &ExistOfParams);
     if (elements_in_array < 0){
         return -5;
     }
@@ -219,7 +213,7 @@ int main(int argc, char **argv)
     array_sort(ReducedArray, SortedArray, reducedSize);
 */
 
-
+    array_sort(numbers,copy_numb,elements_in_array);
     //output = array_compare(ReducedArray, SortedArray, reducedSize);
     //all_output(Stdout,count_Stdout,Stderr,count_Stderr);
 
