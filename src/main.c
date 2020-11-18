@@ -104,15 +104,16 @@ int check_params(int argc, char* argv[], long long* restrict to, long long* rest
 
     for (int i = 1; i < argc; ++i)
     {
-        if( (*(from) == 0) && (strncmp(params[i]  , "--from=" , 7) == 0))     // Если нашли параметр, где начало строки совпадает с "--from=" то надо вычислить то, что нам надо из этого параметра
+        if( (*(from) == 0) && (strncmp(argv[i]  , "--from=" , 7) == 0))    
         {
-            *(from) = strtoll(params[i] +7 , NULL, 10 );  // Вбиваем число в переменную
+            *(from) = strtoll(argv[i] +7 , NULL, 10 );  
 
             ExistOfParams -> from = 1;
         }
-        else if( (*(to) == 0)  && (strncmp( params[i]  , "--to=" , 5) == 0))    // Если нашли параметр, где начало строки совпадает с "--to=" то надо вычислить то, что нам надо из этого параметра
+
+        else if( (*(to) == 0)  && (strncmp( argv[i]  , "--to=" , 5) == 0))    
         {
-            *(to) = strtoll(params[i] +5 , NULL, 10 );          // Вбиваем число в переменную
+            *(to) = strtoll(argv[i] +5 , NULL, 10 );          
 
             ExistOfParams -> to = 1;
         }
