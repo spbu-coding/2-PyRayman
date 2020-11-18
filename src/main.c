@@ -3,9 +3,8 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <limits.h>
-# define sort_array _sort_array
 
-extern void array_sort(int* , int* , int );
+extern void work_with_array(long long* array , int* number_of_elements);
 
 struct params_exist
 {
@@ -213,7 +212,7 @@ int main(int argc, char **argv)
     array_sort(ReducedArray, SortedArray, reducedSize);
 */
 
-    array_sort(numbers,copy_numb,elements_in_array);
+    work_with_array(numbers,&elements_in_array);
     //output = array_compare(ReducedArray, SortedArray, reducedSize);
     //all_output(Stdout,count_Stdout,Stderr,count_Stderr);
 
